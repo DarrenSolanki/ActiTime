@@ -2,9 +2,14 @@ package com.actitime.generic;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
@@ -16,21 +21,23 @@ public abstract class BaseTest implements AutoConstant
 {
 	public WebDriver driver;
 
-	@Parameters({"nodeUrl","browser","appUrl"})
 	@BeforeMethod
-	public void preCondition(String nodeUrl, String browser, String appUrl) throws MalformedURLException
+	public void preCondition() throws MalformedURLException
 	{
-		URL url = new URL(nodeUrl);
-		DesiredCapabilities dc = new DesiredCapabilities();
-		dc.setBrowserName(browser);
-		driver = new RemoteWebDriver(url, dc);
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().deleteAllCookies();
-		driver.get(appUrl);
+		System.setProperty(chrome_key, chrome_value);
+				System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
+				Map<String, Object> prefs = new HashMap<String, Object>();
+				prefs.put("profile.default_content_setting_values.notifications", 2);
+				ChromeOptions options = new ChromeOptions();
+				options.setExperimentalOption("prefs", prefs);
+				driver = new ChromeDriver(options);
+				driver.manage().window().maximize();
+				driver.get("https://demo.actitime.com/login.do");
+
+
 	}
 	
-	@AfterMethod
+
 	public void postCondition(ITestResult res)
 	{
 		int status = res.getStatus();
@@ -43,3 +50,15 @@ public abstract class BaseTest implements AutoConstant
 		driver.close();
 	}
 }
+
+/*
+ * @Parameters({"nodeUrl","browser","appUrl"})
+ * 
+ * @BeforeMethod public void preCondition(String nodeUrl, String browser, String
+ * appUrl) throws MalformedURLException { URL url = new URL(nodeUrl);
+ * DesiredCapabilities dc = new DesiredCapabilities();
+ * dc.setBrowserName(browser); driver = new RemoteWebDriver(url, dc);
+ * driver.manage().window().maximize();
+ * driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+ * driver.manage().deleteAllCookies(); driver.get(appUrl); }
+ */

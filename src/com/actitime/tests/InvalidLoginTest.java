@@ -11,7 +11,7 @@ import com.actitime.pages.LoginPage;
 public class InvalidLoginTest extends BaseTest
 {
 	@Test(priority=2)
-	public void testInvalidLogin() throws InterruptedException
+	public void testInvalidLogin()throws InterruptedException
 	{
 		String loginTitle = ExcelData.getData(file_path, "TC01", 1, 2);
 		String expectedErrorMessge = ExcelData.getData(file_path, "TC02", 1, 2);
@@ -26,7 +26,7 @@ public class InvalidLoginTest extends BaseTest
 		for(int i=1;i<=rc;i++)
 		{
 			String username = ExcelData.getData(file_path, "TC02", i, 0);
-			String password = ExcelData.getData(file_path, "TC02", i, 1);
+			String password = ExcelData.getData(file_path,  "TC02", i, 1);
 	
 			//Enter invalid username
 			Reporter.log("Invalid username: "+username,true);

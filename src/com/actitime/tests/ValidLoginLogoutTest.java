@@ -1,5 +1,6 @@
 package com.actitime.tests;
 
+import org.openqa.selenium.By;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
@@ -43,5 +44,6 @@ public class ValidLoginLogoutTest extends BaseTest
 		
 		//verify login page
 		lp.verifyPage(loginTitle);
+	
 	}
 }

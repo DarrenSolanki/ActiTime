@@ -1,7 +1,11 @@
 package com.actitime.generic;
 
+import java.io.File;
 import java.io.FileInputStream;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -12,10 +16,22 @@ public class ExcelData
 	{
 		try 
 		{
-			FileInputStream fis = new FileInputStream(filePath);
-			Workbook wb = WorkbookFactory.create(fis);
-			String data = wb.getSheet(sheetName).getRow(rn).getCell(cn).toString();
+//			FileInputStream fis = new FileInputStream(new File(filePath));
+//			DataFormatter df = new DataFormatter();
+//			Sheet sh = WorkbookFactory.create(fis).getSheet(sheetName);
+//			String data = sh.getRow(rn).getCell(cn).getStringCellValue();
+			
+			FileInputStream fis = new FileInputStream(new File(filePath));
+			DataFormatter df = new DataFormatter();
+			Sheet sh = WorkbookFactory.create(fis).getSheet(sheetName);
+			Cell cellData = sh.getRow(rn).getCell(cn);
+			String data = df.formatCellValue(cellData);
 			return data;
+			
+//			FileInputStream fis = new FileInputStream(filePath);
+//			Workbook wb = WorkbookFactory.create(fis);
+//			String data = wb.getSheet(sheetName).getRow(rn).getCell(cn).toString();
+//			return data;
 		}
 		catch(Exception e) 
 		{

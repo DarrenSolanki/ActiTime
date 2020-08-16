@@ -10,7 +10,7 @@ import com.actitime.generic.BasePage;
 public class LoginPage extends BasePage
 {
 	//Declaration
-	@FindBy(id="username")
+	@FindBy(name="username")
 	private WebElement usernameTB;
 	
 	@FindBy(name="pwd")
